@@ -9,12 +9,12 @@ import * as actionsVideos from './store/actions/actionsVideos';
 import * as actionsAuth from './store/actions/actionsAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '.';
-import Logout from './containers/Auth/Logout/Logout';
 
 const Auth = React.lazy(() => import('./containers/Auth/Auth'));
 const VideosShowPage = React.lazy(() => import('./containers/VideosShowPage/VideosShowPage'));
 const VideoPlayPage = React.lazy(() => import('./containers/VideoPlayPage/VideoPlayPage'));
 const MenuPage = React.lazy(() => import('./containers/MenuPage/MenuPage'));
+const Logout = React.lazy(() => import('./containers/Auth/Logout/Logout'));
 
 const App = () => {
     const token_ = useSelector((state: AppState) => state.reducer_Auth.userInfo.token);
