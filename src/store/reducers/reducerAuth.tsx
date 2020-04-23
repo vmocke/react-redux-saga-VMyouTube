@@ -1,54 +1,129 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../../shared/utility';
 
 export interface stateTS {
-    token: null | string;
-    userId: null | string;
     error: null | any;
     spinner: boolean;
     authRedirectPath: string;
+    userInfo: {
+        token: null | string;
+        userId: null | string;
+        email: null | string;
+        fullName: null | string;
+        firstName: null | string;
+        lastName: null | string;
+        img: string;
+    };
 }
 
 const initialState: stateTS = {
-    token: null,
-    userId: null,
     error: null,
     spinner: false,
-    authRedirectPath: '/home',
+    authRedirectPath: '/search',
+    userInfo: {
+        token: null,
+        userId: null,
+        email: null,
+        fullName: null,
+        firstName: null,
+        lastName: null,
+        img: '',
+    },
 };
-
-const authStart = (state: stateTS) => {
-    return updateObject(state, { error: null, spinner: true });
+// ANONYMOUS LOGIN
+const onAnonymousLogin_ = (state: stateTS) => {
+    return {
+        ...state,
+        error: null,
+        spinner: false,
+        authRedirectPath: '/search',
+        userInfo: {
+            token: 'anonymous123',
+            userId: 'anonymous',
+            email: null,
+            fullName: 'Anonymus',
+            firstName: null,
+            lastName: null,
+            img: '',
+        },
+    };
 };
-
-const authSuccess = (state: stateTS, action: { idToken: any; userId: any }) => {
-    return updateObject(state, { token: action.idToken, userId: action.userId, error: null, spinner: false });
+// GOOGLE LOGIN
+const onGoogleLoginSaga_ = (state: stateTS) => {
+    return {
+        ...state,
+        error: null,
+        spinner: true,
+    };
 };
-
-const authFail = (state: stateTS, action: { error: any }) => {
-    return updateObject(state, { error: action.error, spinner: false });
+const onGoogleLoginOk_ = (state: stateTS, action: { userInfo: any }) => {
+    return {
+        ...state,
+        error: null,
+        spinner: false,
+        userInfo: action.userInfo,
+    };
 };
-
-const authLogout = (state: stateTS) => {
-    return updateObject(state, { token: null, userId: null });
+const onGoogleLoginFail_ = (state: stateTS, action: { error: any }) => {
+    return {
+        ...state,
+        error: action.error,
+        spinner: false,
+    };
 };
-
-const setAuthRedirectPath = (state: stateTS, action: { path: any }) => {
-    return updateObject(state, { authRedirectPath: action.path });
+// ON AUTH LOGOUT
+const onLogoutSaga_ = (state: stateTS) => {
+    return {
+        ...state,
+        error: null,
+        spinner: true,
+    };
 };
-
+const onLogoutOk_ = (state: stateTS) => {
+    return {
+        ...state,
+        error: null,
+        spinner: false,
+    };
+};
+// ON LOGOUT CLEAR
+const onLogoutClear_ = (state: stateTS) => {
+    return {
+        ...state,
+        error: null,
+        spinner: false,
+        authRedirectPath: '/search',
+        userInfo: {
+            token: null,
+            userId: null,
+            email: null,
+            fullName: 'Anonymus',
+            firstName: null,
+            lastName: null,
+            img: '',
+        },
+    };
+};
+// REDUCER
 const reducer = (state = initialState, action: any): stateTS => {
     switch (action.type) {
-        case actionTypes.AUTH_SAGA:
-            return authStart(state);
-        case actionTypes.AUTH_SUCCESS:
-            return authSuccess(state, action);
-        case actionTypes.AUTH_FAIL:
-            return authFail(state, action);
-        case actionTypes.AUTH_LOGOUT_SUCCEED: // SAGA
-            return authLogout(state);
-        case actionTypes.SET_AUTH_REDIRECT_PATH:
-            return setAuthRedirectPath(state, action);
+        // ANONYMOUS LOGIN
+        case actionTypes.ANONYMOUS_LOGIN:
+            return onAnonymousLogin_(state);
+        // GOOGLE LOGIN
+        case actionTypes.GOOGLE_LOGIN_SAGA:
+            return onGoogleLoginSaga_(state);
+        case actionTypes.GOOGLE_LOGIN_OK:
+            return onGoogleLoginOk_(state, action);
+        case actionTypes.GOOGLE_LOGIN_SAGA:
+            return onGoogleLoginFail_(state, action);
+        // ON AUTH LOGOUT
+        case actionTypes.AUTH_LOGOUT_SAGA:
+            return onLogoutSaga_(state);
+        case actionTypes.AUTH_LOGOUT_OK:
+            return onLogoutOk_(state);
+        // ON LOGOUT CLEAR
+        case actionTypes.AUTH_LOGOUT_CLEAR:
+            return onLogoutClear_(state);
         default:
             return state;
     }

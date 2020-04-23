@@ -1,57 +1,50 @@
 import * as actionTypes from './actionTypes';
-
-export const authSuccess = (idToken_: string, localId_: string) => {
+// ON TRY AUTO SIGNUP
+export const onTryAutoSignup = () => {
     return {
-        type: actionTypes.AUTH_SUCCESS,
-        idToken: idToken_,
-        userId: localId_,
+        type: actionTypes.ON_TRY_AUTO_SIGNUP_SAGA,
     };
 };
-
-export const checkAuthTimeout = (expirationTime: number) => {
+// ANONYMOUS LOGIN
+export const onAnonymousLogin = () => {
+    localStorage.setItem('token', 'Anonymous123');
+    localStorage.setItem('userId', 'anonymous');
     return {
-        type: actionTypes.AUTH_CHECK_TIMEOUT_SAGA,
-        expirationTime: expirationTime,
+        type: actionTypes.ANONYMOUS_LOGIN,
     };
 };
-
-export const authFail = (error_: string) => {
+// GOOGLE LOGIN
+export const onGoogleLogin = (response: {}) => {
     return {
-        type: actionTypes.AUTH_FAIL,
-        error: error_,
+        type: actionTypes.GOOGLE_LOGIN_SAGA,
+        response: response,
     };
 };
-
-export const auth = (email_: string, password_: string, isSignup_: boolean) => {
+export const onGoogleLoginOk = (userInfo: {}) => {
     return {
-        type: actionTypes.AUTH_SAGA,
-        email_: email_,
-        password_: password_,
-        isSignup_: isSignup_,
+        type: actionTypes.GOOGLE_LOGIN_OK,
+        userInfo: userInfo,
     };
 };
-/////////////////////////////////////
-export const authCheckState = () => {
+export const onGoogleLoginFail = (error: any) => {
     return {
-        type: actionTypes.AUTH_CHECK_STATE_SAGA,
+        type: actionTypes.GOOGLE_LOGIN_FAIL,
+        error: error,
     };
 };
-/////////////////////////////////////
-export const logoutSucceed = () => {
-    return {
-        type: actionTypes.AUTH_LOGOUT_SUCCEED,
-    };
-};
-
-export const logout = () => {
+// LOGOUT
+export const onLogout = () => {
     return {
         type: actionTypes.AUTH_LOGOUT_SAGA,
     };
 };
-/////////////////////////////////////
-export const setAuthRedirectPath = (path_: string) => {
+export const onLogoutOk = () => {
     return {
-        type: actionTypes.SET_AUTH_REDIRECT_PATH,
-        path: path_,
+        type: actionTypes.AUTH_LOGOUT_OK,
+    };
+};
+export const onLogoutClear = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT_CLEAR,
     };
 };

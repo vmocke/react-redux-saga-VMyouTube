@@ -45,3 +45,20 @@ export const spinnerTimeout = (setLocalSpinnerName: any, time: number) => {
         setLocalSpinnerName(false);
     }, time);
 };
+
+export const limitTitle = (title: string, limit: number) => {
+    const newTitle: any = [];
+    if (title.length > limit) {
+        title.split(' ').reduce((acc: any, cur: any) => {
+            if (acc + cur.length <= limit) {
+                newTitle.push(cur);
+            }
+
+            return acc + cur.length;
+        }, 0);
+
+        return `${newTitle.join(' ')} ...`;
+    }
+
+    return title;
+};

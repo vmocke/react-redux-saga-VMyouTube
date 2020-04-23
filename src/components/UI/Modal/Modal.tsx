@@ -3,15 +3,15 @@ import classes from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
 interface ModalProps {
-    show: any;
-    modalClosed: any;
+    show: boolean | any;
+    onClick?: any;
     children: any;
 }
 
 const Modal = (props: ModalProps) => {
     return (
         <React.Fragment>
-            <Backdrop show={props.show} backdropClicked={props.modalClosed} />
+            <Backdrop show={props.show} onClick={props.onClick} />
             <div
                 className={classes.Modal}
                 style={{

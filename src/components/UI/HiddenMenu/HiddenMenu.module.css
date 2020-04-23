@@ -1,0 +1,60 @@
+.HiddenMenuDiv {
+    position: relative;
+    display: flex;
+    padding: 0 !important;
+    padding: 3rem 0;
+    margin-bottom: 5rem;
+}
+.HiddenMenuDiv h3 {
+    border-bottom: 2rem solid black;
+    padding: 3rem;
+}
+
+.HiddenMenu {
+    position: absolute;
+    left: 60rem;
+    list-style-type: none;
+    margin: 0 30rem;
+    padding: 20rem;
+    border-radius: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    z-index: 10;
+    background-color: #fff;
+    box-shadow: 0 0.8rem 5rem 2rem rgba(101, 90, 86, 0.1);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s 0.2s;
+}
+.HiddenMenu ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+}
+.HiddenMenu li {
+    cursor: pointer;
+}
+
+.HiddenMenu:hover,
+.HiddenMenuText:hover + .HiddenMenu {
+    visibility: visible;
+    opacity: 1;
+}
+
+.HiddenMenuText {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: all 0.3s;
+}
+
+.HiddenMenuText:hover {
+    background-color: #f2efee;
+    visibility: visible;
+    opacity: 1;
+}

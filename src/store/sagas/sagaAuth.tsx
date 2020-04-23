@@ -1,60 +1,52 @@
-import { put, delay } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import * as actionsAuth from '../actions/actionsAuth';
-import axios from 'axios';
 
-export function* logoutSaga() {
-    /* if do testing generators better this way
-    yield call([localStorage, "removeItem"], "token")
-    */
-    yield localStorage.removeItem('token');
-    yield localStorage.removeItem('expirationDate');
-    yield localStorage.removeItem('userId');
-    yield put(actionsAuth.logoutSucceed());
-}
-
-export function* checkAuthTimeoutSaga(action: any) {
-    yield delay(action.expirationTime * 1000);
-    yield put(actionsAuth.logout());
-}
-
-export function* authSaga(action: { email_: string; password_: string; isSignup_: boolean }) {
-    const API_KEY = 'AIzaSyAgAaO9K2YKYX-hSFMMdiCxQTvj7EMs130';
-    const authData = {
-        email: action.email_,
-        password: action.password_,
-        returnSecureToken: true,
+export function* onGoogleLoginSaga(response: {
+    response: {
+        error?: any;
+        tokenId: string;
+        googleId: string;
+        profileObj: { email: string; name: string; givenName: string; familyName: string; imageUrl: string };
     };
-
-    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
-    if (!action.isSignup_) {
-        url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
-    }
-    try {
-        const response = yield axios.post(url, authData);
-        const expirationDate: any = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-        yield localStorage.setItem('token', response.data.idToken);
-        yield localStorage.setItem('expirationDate', expirationDate);
-        yield localStorage.setItem('userId', response.data.localId);
-        yield put(actionsAuth.authSuccess(response.data.idToken, response.data.localId));
-        yield put(actionsAuth.checkAuthTimeout(response.data.expiresIn));
-    } catch (error) {
-        yield put(actionsAuth.authFail(error.response.data.error));
+}) {
+    const res = response.response;
+    if (typeof res.error === typeof '') {
+        yield put(actionsAuth.onGoogleLoginFail(res.error));
+    } else {
+        const userInfo = {
+            token: res.tokenId,
+            userId: res.googleId,
+            email: res.profileObj.email,
+            fullName: res.profileObj.name,
+            firstName: res.profileObj.givenName,
+            lastName: res.profileObj.familyName,
+            img: res.profileObj.imageUrl,
+        };
+        yield localStorage.setItem('res', JSON.stringify(res));
+        yield localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        yield localStorage.setItem('token', userInfo.token);
+        yield localStorage.setItem('userId', userInfo.userId);
+        yield put(actionsAuth.onGoogleLoginOk(userInfo));
     }
 }
 
-export function* authCheckStateSaga() {
-    const token = yield localStorage.getItem('token');
-    if (!token) {
-        yield put(actionsAuth.logout());
+export function* onLogoutSaga() {
+    yield localStorage.removeItem('res');
+    yield localStorage.removeItem('userInfo');
+    yield localStorage.removeItem('token');
+    yield localStorage.removeItem('userId');
+    yield put(actionsAuth.onLogoutOk());
+}
+
+export function* onTryAutoSignupSaga() {
+    const token_ = yield localStorage.getItem('token');
+    if (!token_) {
+        yield put(actionsAuth.onLogout());
+    } else if (token_ === 'Anonymous123') {
+        yield put(actionsAuth.onAnonymousLogin());
     } else {
-        const expirationDate_: any = yield localStorage.getItem('expirationDate');
-        const expirationDate: any = yield new Date(expirationDate_);
-        if (expirationDate <= new Date()) {
-            yield put(actionsAuth.logout());
-        } else {
-            const userId: any = yield localStorage.getItem('userId');
-            yield put(actionsAuth.authSuccess(token, userId));
-            yield put(actionsAuth.checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
-        }
+        const userInfo_ = yield localStorage.getItem('userInfo');
+        const userInfo = JSON.parse(userInfo_);
+        yield put(actionsAuth.onGoogleLoginOk(userInfo));
     }
 }

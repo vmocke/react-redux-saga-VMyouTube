@@ -1,35 +1,49 @@
-* {
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+@mixin flex($values) {
+    -webkit-box-flex: $values;
+    -moz-box-flex: $values;
+    -webkit-flex: $values;
+    -ms-flex: $values;
+    flex: $values;
+}
+@mixin order($val) {
+    -webkit-box-ordinal-group: $val;
+    -moz-box-ordinal-group: $val;
+    -ms-flex-order: $val;
+    -webkit-order: $val;
+    order: $val;
+}
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+html,
+body {
+    height: 100%;
     margin: 0;
     padding: 0;
+    font-size: 6.25%;
 }
-
-*,
-*::before,
-*::after {
-    box-sizing: inherit;
-}
-
-html {
-    box-sizing: border-box;
-    font-size: 62.5%;
-}
-@media only screen and (max-width: 68.75em) {
-    html {
-        font-size: 50%;
-    }
-}
-
 body {
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    color: #655a56;
-    background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: calc(100vh - 2 * 4vw);
+    font: 16rem 'Roboto', Helvetica, sans-serif;
 }
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+#root {
+    height: 100%;
+    min-width: 767px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    background: black;
 }

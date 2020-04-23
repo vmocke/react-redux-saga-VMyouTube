@@ -1,9 +1,6 @@
 import axios from 'axios';
-
-export const fire = axios.create({
-    baseURL: `https://recipes-edamam.firebaseio.com/`,
+//////////////////////// youtube
+export const youtubeTest = axios.create({
+    baseURL: `https://www.googleapis.com/youtube/v3`,
 });
-
-export const edamam = axios.create({
-    baseURL: `https://api.edamam.com/`,
-});
+export const apiYTtest = `AIzaSyAw2gzRXoWP5Aup15d8UaGX3NE-ThODFqs`;

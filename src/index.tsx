@@ -6,15 +6,15 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import reducerRecipe from './store/reducers/reducerRecipe';
 import reducerAuth from './store/reducers/reducerAuth';
+import reducerVideos from './store/reducers/reducerVideos';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { watchAuth, watchRecipe, watchLikesItems } from './store/sagas/index';
+import { watchAuth, watchVideos } from './store/sagas/index';
 
 // Sujungiam reducer'ius
 const rootReducer = combineReducers({
-    reducer_Recipe: reducerRecipe,
     reducer_Auth: reducerAuth,
+    reducer_Videos: reducerVideos,
 });
 
 const sagaMiddleware = createSagaMiddleware(); // SAGA
@@ -27,8 +27,7 @@ const composeEnhancers =
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware as SagaMiddleware<AppState>)));
 
 sagaMiddleware.run(watchAuth);
-sagaMiddleware.run(watchRecipe);
-sagaMiddleware.run(watchLikesItems);
+sagaMiddleware.run(watchVideos);
 
 console.log('[STORE]', store.getState());
 

@@ -1,0 +1,13 @@
+.SearchBar button {
+    padding: 6px 10px;
+    background: #eee;
+    font-size: 17px;
+    border: 1px solid #eee;
+    background: rgb(243, 242, 242);
+    cursor: pointer;
+}
+input[type='text'] {
+    padding: 6px;
+    font-size: 17px;
+    border: 1px solid #eee;
+}

@@ -1,0 +1,44 @@
+.VideosShowPage {
+    margin: 20rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.VideoShowPageCard {
+    height: 230rem;
+    width: 320rem;
+    margin: 10rem;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    background: rgb(247, 97, 97);
+}
+.someInfo {
+    height: 450rem;
+    width: 350rem;
+    background-color: #fff;
+    box-shadow: 0 0.8rem 10rem 10rem rgba(101, 90, 86, 0.1);
+    border-radius: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.someInfo h3 {
+    font-size: 12rem;
+}
+.someInfo h2 {
+    margin: 5rem;
+    font-size: 15rem;
+}
+.someInfo img {
+    width: 180rem;
+    height: 180rem;
+}
+@media screen and (max-width: 767px) {
+    /* start of medium tablet styles */
+    .VideoPage {
+    }
+}

@@ -1,20 +1,18 @@
 import React from 'react';
-import classes from './Button.module.css';
 
 interface ButtonProps {
-    classNameDiv?: any | string;
-    classNameButton: string;
-    onClick?: any;
-    children?: any;
+    id?: string;
+    value?: string;
+    title: string;
+    onClick: any;
+    className?: any;
 }
 
 const Button = (props: ButtonProps) => {
     return (
-        <div className={[classes[props.classNameDiv]].join('.')}>
-            <button className={[classes[props.classNameButton]].join('.')} onClick={props.onClick}>
-                {props.children}
-            </button>
-        </div>
+        <button id={props.id} value={props.value} onClick={props.onClick} className={props.className}>
+            {props.title}
+        </button>
     );
 };
 
