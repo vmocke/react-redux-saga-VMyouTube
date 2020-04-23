@@ -125,7 +125,45 @@ const MenuPage = (props: any) => {
     };
 
     const MenuItems = menuItems_.map((item) => {
-        return (
+        if (
+            item.itemTitle === 'Search history' ||
+            item.itemTitle === 'Videos history' ||
+            item.itemTitle === 'Favorite videos'
+        ) {
+            return (
+                <div className={classes.notDeletable}>
+                    <div key={item.itemTitle} className={classes.MenuListItem}>
+                        <MenuPageItem
+                            id={item.itemTitle}
+                            onClick={(e: any) => {
+                                showMenuContent(e.target.id);
+                            }}
+                            title={item.itemTitle}
+                        />
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div key={item.itemTitle} className={classes.MenuListItem}>
+                    <Button
+                        id={item.itemTitle}
+                        title="X"
+                        onClick={(e: any) => {
+                            onDeletePlaylistHandler(e);
+                        }}
+                    />
+                    <MenuPageItem
+                        id={item.itemTitle}
+                        onClick={(e: any) => {
+                            showMenuContent(e.target.id);
+                        }}
+                        title={item.itemTitle}
+                    />
+                </div>
+            );
+        }
+        /*return (
             <div key={item.itemTitle} className={classes.MenuListItem}>
                 <Button
                     id={item.itemTitle}
@@ -142,7 +180,7 @@ const MenuPage = (props: any) => {
                     title={item.itemTitle}
                 />
             </div>
-        );
+        );*/
     });
 
     let showItemContent = <h1>The list is empty</h1>;

@@ -83,3 +83,7 @@ button:hover {
     background: #fff;
     box-shadow: 0 0.8rem 5rem 2rem rgba(101, 90, 86, 0.1);
 }
+.notDeletable {
+    margin-left: 32rem;
+    margin-top: 13rem;
+}
