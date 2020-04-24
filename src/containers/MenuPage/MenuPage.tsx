@@ -131,8 +131,8 @@ const MenuPage = (props: any) => {
             item.itemTitle === 'Favorite videos'
         ) {
             return (
-                <div className={classes.notDeletable}>
-                    <div key={item.itemTitle} className={classes.MenuListItem}>
+                <div key={item.itemTitle} className={classes.notDeletable}>
+                    <div className={classes.MenuListItem}>
                         <MenuPageItem
                             id={item.itemTitle}
                             onClick={(e: any) => {
