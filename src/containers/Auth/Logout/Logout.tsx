@@ -16,7 +16,7 @@ const Logout = () => {
             on_Logout_Clear();
             on_Logout_Clear_Videos();
         };
-    }, [on_Logout, on_Logout_Clear]);
+    }, [on_Logout, on_Logout_Clear, on_Logout_Clear_Videos]);
 
     return <Redirect to="/login" />;
 };

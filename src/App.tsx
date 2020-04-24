@@ -26,7 +26,7 @@ const App = () => {
     useEffect(() => {
         on_Try_Auto_Signup();
         on_Page_Reload_Handler();
-    }, [on_Page_Reload_Handler]);
+    }, [on_Page_Reload_Handler, on_Try_Auto_Signup]);
 
     let routes = null;
 

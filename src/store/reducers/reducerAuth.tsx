@@ -114,7 +114,7 @@ const reducer = (state = initialState, action: any): stateTS => {
             return onGoogleLoginSaga_(state);
         case actionTypes.GOOGLE_LOGIN_OK:
             return onGoogleLoginOk_(state, action);
-        case actionTypes.GOOGLE_LOGIN_SAGA:
+        case actionTypes.GOOGLE_LOGIN_FAIL:
             return onGoogleLoginFail_(state, action);
         // ON AUTH LOGOUT
         case actionTypes.AUTH_LOGOUT_SAGA:

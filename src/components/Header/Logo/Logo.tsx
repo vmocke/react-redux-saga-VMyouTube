@@ -11,7 +11,7 @@ const Logo = () => {
     if (!userInfo.img) {
         logo = <img src={anonymous} alt="Anonymous" />;
     } else {
-        logo = <img src={userInfo.img} />;
+        logo = <img src={userInfo.img} alt={userInfo.img} />;
     }
     return <div className={classes.Logo}>{logo}</div>;
 };

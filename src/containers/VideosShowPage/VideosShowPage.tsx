@@ -63,7 +63,11 @@ const VideosShowPage = (props: any) => {
 
     let someInfo = (
         <div className={classes.someInfo}>
-            {userInfo_.img ? <img src={userInfo_.img} /> : <img src={anonymous} width="400rem" />}
+            {userInfo_.img ? (
+                <img src={userInfo_.img} alt={userInfo_.img} />
+            ) : (
+                <img src={anonymous} alt={anonymous} width="400rem" />
+            )}
             <div>
                 <h3>Logged in as:</h3>
                 <h2>{userInfo_.fullName}</h2>
